@@ -30,16 +30,19 @@ function numberHandler(event) {
     const buttonNumber = event.target.innerHTML;
     displayContent.push(buttonNumber);
     fillDisplay();
-    if (num1 === null) {
-        operatorButtons.forEach((button) => {
-            button.addEventListener('click', operatorHandler);
-        });
-    } else {
+    
+    operatorButtons.forEach((button) => {
+        button.addEventListener('click', operatorHandler);
+    });
+    if (num1 !== null) {
         equalButton.addEventListener('click', equalHandler);
     }
 }
 
 function operatorHandler(event) {
+    if (operator !== null) {
+        equalHandler();
+    }
     operator = event.target.innerHTML;
     num1 = Number(displayString);
     displayContent.splice(0, displayContent.length);
@@ -65,7 +68,8 @@ function equalHandler() {
             displayContent.push(multiply(num1, num2));
     }
     fillDisplay();
-    operator = num1 = num2 = null;
+    num2 = null;
+    num1 = Number(displayString);
     operatorButtons.forEach((button) => {
         button.addEventListener('click', operatorHandler);
     });
