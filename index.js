@@ -1,18 +1,34 @@
-let num1;
-let num2;
+let num1 = null;
+let num2 = null;
 let operator;
 const displayContent = [];
 const display = document.querySelector('#display');
 
 const numberButtons = document.querySelectorAll('.number');
 
+const operatorButtons = document.querySelectorAll('.operator');
+
 numberButtons.forEach((button) => {
-    button.addEventListener('click', (e) => {
-        buttonNumber = e.target.innerHTML;
-        displayContent.push(buttonNumber);
-        fillDisplay();
-    });
+    button.addEventListener('click', numberHandler)
 });
+
+function numberHandler(event) {
+    const buttonNumber = event.target.innerHTML;
+    displayContent.push(buttonNumber);
+    fillDisplay();
+    if (num1 === null) {
+        operatorButtons.forEach((button) => {
+            button.addEventListener('click', operatorHandler);
+        });
+    };
+}
+
+function operatorHandler(event) {
+    operator = event.target.innerHTML;
+    operatorButtons.forEach((button) => {
+        button.removeEventListener('click', operatorHandler);
+    })
+}
 
 function fillDisplay() {
     const displayString = displayContent.join('');
