@@ -65,6 +65,10 @@ function equalHandler() {
             displayContent.push(multiply(num1, num2));
     }
     fillDisplay();
+    operator = num1 = num2 = null;
+    operatorButtons.forEach((button) => {
+        button.addEventListener('click', operatorHandler);
+    });
 }
 
 function fillDisplay() {
