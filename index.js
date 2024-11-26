@@ -1,5 +1,6 @@
 let num1 = null;
 let num2 = null;
+let displayString = '';
 let operator;
 const displayContent = [];
 const display = document.querySelector('#display');
@@ -7,6 +8,19 @@ const display = document.querySelector('#display');
 const numberButtons = document.querySelectorAll('.number');
 
 const operatorButtons = document.querySelectorAll('.operator');
+
+const equalButton = document.querySelector('.enter');
+
+const clearButton = document.querySelector('.clear');
+
+clearButton.addEventListener('click', () => {
+    num1 = num2 = operator = null;
+    displayContent.splice(0, displayContent.length);
+    fillDisplay();
+    operatorButtons.forEach((button) => {
+        button.removeEventListener('click', operatorHandler);
+    })
+})
 
 numberButtons.forEach((button) => {
     button.addEventListener('click', numberHandler)
@@ -20,19 +34,41 @@ function numberHandler(event) {
         operatorButtons.forEach((button) => {
             button.addEventListener('click', operatorHandler);
         });
-    };
+    } else {
+        equalButton.addEventListener('click', equalHandler);
+    }
 }
 
 function operatorHandler(event) {
     operator = event.target.innerHTML;
+    num1 = Number(displayString);
+    displayContent.splice(0, displayContent.length);
     operatorButtons.forEach((button) => {
         button.removeEventListener('click', operatorHandler);
     })
 }
 
+function equalHandler() {
+    num2 = Number(displayString);
+    displayContent.splice(0, displayContent.length);
+    switch (operator) {
+        case '+':
+            displayContent.push(add(num1, num2));
+            break;
+        case '-':
+            displayContent.push(subtract(num1, num2));
+            break;
+        case '/':
+            displayContent.push(divide(num1, num2));
+            break;
+        case '*':
+            displayContent.push(multiply(num1, num2));
+    }
+    fillDisplay();
+}
+
 function fillDisplay() {
-    const displayString = displayContent.join('');
-    console.log(displayString);
+    displayString = displayContent.join('');
     display.innerHTML = displayString;
 }
 
