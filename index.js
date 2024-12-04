@@ -1,5 +1,4 @@
-let num1 = null;
-let num2 = null;
+let num1 = num2 = null;
 let displayString = '';
 let operator;
 const displayContent = [];
